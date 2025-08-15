@@ -1,6 +1,6 @@
 # Hahaton
 
-Коротко: монолитное приложение для хакатона — бекенд на Spring Boot (Java 17) и фронтенд на React (Vite). Сборка фронтенда интегрирована в Maven через `frontend-maven-plugin`.
+Коротко: монолитное приложение для хакатона — бекенд на Spring Boot (Java 17) и фронтенд на React (Vite + TypeScript + Tailwind CSS). Сборка фронтенда интегрирована в Maven через `frontend-maven-plugin`.
 
 ## Требования
 - Java 17 (JDK)
@@ -20,17 +20,17 @@
 
 Фронтенд собирается Vite в `src/main/frontend/dist` и автоматически копируется в `classpath:/static`.
 
-## Запуск (Development, раздельно)
+## Разработка (отдельный запуск)
 - Бекенд:
   ```bash
   mvn spring-boot:run
   ```
 - Фронтенд (в отдельном терминале):
   ```bash
-  cd src/main/frontend
-  npm run dev
+  npm --prefix src/main/frontend install    # первая установка
+  npm --prefix src/main/frontend run dev    # запуск dev-сервера
   ```
-  Откройте http://localhost:5173 — все запросы на `/api` проксируются на бекенд http://localhost:8080.
+  Откройте http://localhost:5174 (порт может отличаться, смотрите вывод команды).
 
 ## Структура
 - `src/main/java` — Spring Boot приложение
@@ -38,8 +38,12 @@
 - `src/main/frontend` — React (Vite) приложение
 
 ## Примечания
-- В проекте нет Thymeleaf — UI полностью на React.
-- Для роутинга SPA при необходимости добавьте контроллер-фолбэк, чтобы все неизвестные пути возвращали `index.html`.
+- Фронтенд использует:
+  - TypeScript
+  - Tailwind CSS для стилей
+  - Vite для сборки
+
+- Для SPA-роутинга может потребоваться настройка контроллера-фоллбэка (все пути → `index.html`).
 
 ## О проекте
 Это приложение разрабатывается в рамках хакатона.
