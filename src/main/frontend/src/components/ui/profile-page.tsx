@@ -1,5 +1,6 @@
 import React from 'react'
 import { GradientButton } from './gradient-button'
+import { AIHelper } from './ai-helper'
 
 interface ProfilePageProps {
   onNavigate: (page: string) => void
@@ -138,6 +139,9 @@ export function ProfilePage({ onNavigate }: ProfilePageProps) {
           </div>
         </div>
       </div>
+      
+      {/* AI Помощник */}
+      <AIHelper />
     </div>
   )
 }
