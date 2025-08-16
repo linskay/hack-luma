@@ -17,7 +17,7 @@ public class OpenApiConfig {
     public OpenAPI applicationOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("🎃 AI Помощник 'BOO! ИИспугался?' API")
+                        .title("🎃 AI Помощник 'БУ! ИИспугался?' API")
                         .description("""
                             ## 🚀 Полнофункциональное веб-приложение с локальным AI помощником
                             
@@ -33,14 +33,14 @@ public class OpenApiConfig {
                             - React + TypeScript
                             - Swagger/OpenAPI 3.0
                             
-                            ### Автор: Team Hahaton
+                            ### Автор: БУ! ИИспугался?
                             """)
                         .version("1.0.0")
                         .license(new License()
                                 .name("MIT License")
                                 .url("https://opensource.org/licenses/MIT"))
                         .contact(new Contact()
-                                .name("Team Hahaton")
+                                .name("БУ! ИИспугался?")
                                 .email("team@hahaton.example")
                                 .url("https://github.com/team/hahaton"))
                 )

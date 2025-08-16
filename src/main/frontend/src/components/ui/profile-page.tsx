@@ -1,55 +1,16 @@
 import React from 'react'
 import { GradientButton } from './gradient-button'
 import { AIHelper } from './ai-helper'
+import { MorphingSquare } from './morphing-square'
 
 interface ProfilePageProps {
   onNavigate: (page: string) => void
+  isLoading: boolean
 }
 
-export function ProfilePage({ onNavigate }: ProfilePageProps) {
+export function ProfilePage({ onNavigate, isLoading }: ProfilePageProps) {
   return (
     <div className="min-h-screen">
-      {/* Красивая навигация */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-lg border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-white text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              &lt;BOO!/&gt;
-            </div>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => onNavigate('profile')}
-                className="relative px-6 py-3 text-white/80 hover:text-white rounded-full transition-all duration-300 hover:bg-white/10 group overflow-hidden"
-              >
-                <span className="relative z-10">Профиль</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-              </button>
-              <button
-                onClick={() => onNavigate('learn')}
-                className="relative px-6 py-3 text-white/80 hover:text-white rounded-full transition-all duration-300 hover:bg-white/10 group overflow-hidden"
-              >
-                <span className="relative z-10">Учиться</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-              </button>
-              <button
-                onClick={() => onNavigate('prices')}
-                className="relative px-6 py-3 text-white/80 hover:text-white rounded-full transition-all duration-300 hover:bg-white/10 group overflow-hidden"
-              >
-                <span className="relative z-10">Цены</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-              </button>
-              <button
-                onClick={() => onNavigate('logout')}
-                className="relative px-6 py-3 text-white/80 hover:text-white rounded-full transition-all duration-300 hover:bg-white/10 group overflow-hidden"
-              >
-                <span className="relative z-10">Выход</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Основной контент */}
       <div className="max-w-6xl mx-auto p-8 pt-32">
         {/* Заголовок профиля */}
@@ -139,6 +100,8 @@ export function ProfilePage({ onNavigate }: ProfilePageProps) {
           </div>
         </div>
       </div>
+      
+      
       
       {/* AI Помощник */}
       <AIHelper />
