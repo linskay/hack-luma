@@ -3,6 +3,9 @@ Write-Host "=" * 50 -ForegroundColor Cyan
 
 $baseUrl = "http://localhost:8080"
 
+# Гарантируем корректную кириллицу в консоли
+[Console]::OutputEncoding = [Text.Encoding]::UTF8
+
 # Test health endpoint
 Write-Host "1. Testing health endpoint..." -ForegroundColor Yellow
 try {
@@ -32,8 +35,10 @@ Write-Host ""
 # Test simple question (should use local response)
 Write-Host "3. Testing simple question (local response)..." -ForegroundColor Yellow
 try {
-    $body = @{question = "Что такое Java?"} | ConvertTo-Json
-    $response = Invoke-WebRequest -Uri "$baseUrl/api/ai/chat" -Method POST -ContentType "application/json" -Body $body
+    $json = @{ question = "Что такое Java?" } | ConvertTo-Json -Depth 5
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($json)
+    $headers = @{ 'Accept-Charset' = 'utf-8' }
+    $response = Invoke-WebRequest -Uri "$baseUrl/api/ai/chat" -Method POST -ContentType "application/json; charset=utf-8" -Headers $headers -Body $bytes
     Write-Host "Simple question: $($response.StatusCode)" -ForegroundColor Green
     $content = $response.Content | ConvertFrom-Json
     Write-Host "AI Response: $($content.response)" -ForegroundColor Green
@@ -46,8 +51,10 @@ Write-Host ""
 # Test complex question (should use Gemini API)
 Write-Host "4. Testing complex question (Gemini API)..." -ForegroundColor Yellow
 try {
-    $body = @{question = "Объясни принципы SOLID в программировании"} | ConvertTo-Json
-    $response = Invoke-WebRequest -Uri "$baseUrl/api/ai/chat" -Method POST -ContentType "application/json" -Body $body
+    $json = @{ question = "Объясни принципы SOLID в программировании" } | ConvertTo-Json -Depth 5
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($json)
+    $headers = @{ 'Accept-Charset' = 'utf-8' }
+    $response = Invoke-WebRequest -Uri "$baseUrl/api/ai/chat" -Method POST -ContentType "application/json; charset=utf-8" -Headers $headers -Body $bytes
     Write-Host "Complex question: $($response.StatusCode)" -ForegroundColor Green
     $content = $response.Content | ConvertFrom-Json
     Write-Host "AI Response: $($content.response)" -ForegroundColor Green

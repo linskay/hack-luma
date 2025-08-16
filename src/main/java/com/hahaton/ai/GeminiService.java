@@ -47,8 +47,26 @@ public class GeminiService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             
+            // Проверка и формирование корректного URL и ключа
+            String apiKey = safeTrim(geminiConfig.getApiKey());
+            String apiUrl = safeTrim(geminiConfig.getApiUrl());
+            String model = safeTrim(geminiConfig.getModelName());
+            if (apiUrl == null || apiUrl.isEmpty()) {
+                // Формируем URL по умолчанию
+                String m = (model == null || model.isEmpty()) ? "gemini-pro" : model;
+                apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/" + m + ":generateContent";
+            }
+            if (apiKey == null || apiKey.isEmpty()) {
+                System.err.println("Gemini API key is empty. Set GEMINI_API_KEY or gemini.api.key property.");
+                return "Извините, ключ API Gemini не настроен. Обратитесь к администратору.";
+            }
+            if (!apiUrl.startsWith("http")) {
+                System.err.println("Gemini API URL is invalid: " + apiUrl);
+                return "Извините, конфигурация AI некорректна (URL). Попробуйте позже.";
+            }
+            
             // URL с API ключом
-            String url = geminiConfig.getApiUrl() + "?key=" + geminiConfig.getApiKey();
+            String url = apiUrl + "?key=" + apiKey;
             
             // Отправляем запрос
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
@@ -116,5 +134,9 @@ public class GeminiService {
         };
         
         return tips[(int) (Math.random() * tips.length)];
+    }
+
+    private String safeTrim(String s) {
+        return s == null ? null : s.trim();
     }
 }
