@@ -21,9 +21,15 @@ const gradientButtonVariants = cva(
         default: "",
         variant: "gradient-button-variant",
       },
+      size: {
+        default: "min-w-[132px] px-9 py-4 text-base",
+        sm: "min-w-[100px] px-6 py-2 text-sm",
+        lg: "min-w-[160px] px-12 py-6 text-lg",
+      },
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   }
 )
@@ -33,10 +39,10 @@ export interface GradientButtonProps
     VariantProps<typeof gradientButtonVariants> {}
 
 const GradientButton = React.forwardRef<HTMLButtonElement, GradientButtonProps>(
-  ({ className, variant, ...props }, ref) => {
+  ({ className, variant, size, ...props }, ref) => {
     return (
       <button
-        className={cn(gradientButtonVariants({ variant, className }))}
+        className={cn(gradientButtonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
