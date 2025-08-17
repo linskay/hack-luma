@@ -1,4 +1,4 @@
-package com.hahaton.model;
+package com.hahaton.sqltrainer.model;
 
 import lombok.Data;
 

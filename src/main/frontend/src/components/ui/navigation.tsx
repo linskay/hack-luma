@@ -11,7 +11,8 @@ import {
   Dumbbell,
   Library,
   FileText,
-  Briefcase
+  Briefcase,
+  MessageSquare
 } from 'lucide-react'
 
 interface NavigationProps {
@@ -45,7 +46,8 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
       icon: User,
       color: 'from-blue-500 to-purple-500',
       hoverColor: 'from-blue-500/20 to-purple-500/20',
-      activeColor: 'from-blue-500/30 to-purple-500/30'
+      activeColor: 'from-blue-500/30 to-purple-500/30',
+      clickable: true
     },
     {
       id: 'learn',
@@ -54,6 +56,7 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
       color: 'from-green-500 to-blue-500',
       hoverColor: 'from-green-500/20 to-blue-500/20',
       activeColor: 'from-green-500/30 to-blue-500/30',
+      clickable: false,
       submenu: [
         { id: 'courses', title: 'Курсы', icon: BookOpen, description: 'Изучайте программирование' },
         { id: 'trainers', title: 'Тренажеры', icon: Dumbbell, description: 'Практические упражнения' },
@@ -63,13 +66,15 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
     {
       id: 'career',
       title: 'Карьера',
-      icon: TrendingUp,
+      icon: Briefcase,
       color: 'from-purple-500 to-pink-500',
       hoverColor: 'from-purple-500/20 to-pink-500/20',
       activeColor: 'from-purple-500/30 to-pink-500/30',
+      clickable: false,
       submenu: [
-        { id: 'resume', title: 'Резюме', icon: FileText, description: 'Создайте свое резюме' },
-        { id: 'prospects', title: 'Перспективы', icon: Briefcase, description: 'Карьерные возможности' }
+        { id: 'resume', title: 'Резюме', icon: FileText },
+        { id: 'prospects', title: 'Перспективы', icon: TrendingUp },
+        { id: 'interview', title: 'Тренировка собеседований', icon: MessageSquare }
       ]
     },
     {
@@ -78,7 +83,8 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
       icon: DollarSign,
       color: 'from-yellow-500 to-orange-500',
       hoverColor: 'from-yellow-500/20 to-orange-500/20',
-      activeColor: 'from-yellow-500/30 to-orange-500/30'
+      activeColor: 'from-yellow-500/30 to-orange-500/30',
+      clickable: true
     },
     {
       id: 'companies',
@@ -86,7 +92,8 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
       icon: Building2,
       color: 'from-indigo-500 to-blue-500',
       hoverColor: 'from-indigo-500/20 to-blue-500/20',
-      activeColor: 'from-indigo-500/30 to-blue-500/30'
+      activeColor: 'from-indigo-500/30 to-blue-500/30',
+      clickable: true
     },
     {
       id: 'logout',
@@ -94,20 +101,19 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
       icon: LogOut,
       color: 'from-red-500 to-pink-500',
       hoverColor: 'from-red-500/20 to-red-500/20',
-      activeColor: 'from-red-500/30 to-red-500/30'
+      activeColor: 'from-red-500/30 to-red-500/30',
+      clickable: true
     }
   ]
 
   const handleMenuClick = (menuId: string) => {
     if (menuId === 'logout') {
       onNavigate('logout')
-    } else if (menuId === 'learn' || menuId === 'career') {
-      // Для пунктов с подменю - переходим на основную страницу
-      onNavigate(menuId)
-    } else {
-      // Для остальных пунктов - переходим напрямую
+    } else if (menuId === 'profile' || menuId === 'prices' || menuId === 'companies') {
+      // Для кликабельных пунктов - переходим напрямую
       onNavigate(menuId)
     }
+    // Для 'learn' и 'career' ничего не делаем - только выпадающее меню
   }
 
   const handleSubmenuClick = (subItemId: string) => {
@@ -116,7 +122,7 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
     
     if (subItemId === 'courses' || subItemId === 'trainers' || subItemId === 'library') {
       onNavigate(subItemId) // Передаем конкретную подстраницу
-    } else if (subItemId === 'resume' || subItemId === 'prospects') {
+    } else if (subItemId === 'resume' || subItemId === 'prospects' || subItemId === 'interview') {
       onNavigate(subItemId) // Передаем конкретную подстраницу
     }
   }
@@ -139,13 +145,14 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
               >
                 <button
                   onClick={() => handleMenuClick(item.id)}
-                  className={`relative px-6 py-3 text-white font-medium hover:text-white rounded-xl transition-all duration-300 group overflow-hidden ${
+                  className={`relative px-6 py-3 text-white font-medium rounded-xl transition-all duration-300 group overflow-hidden ${
                     currentPage === item.id 
                       ? 'bg-white/30 shadow-lg shadow-white/20 text-white' 
                       : hoveredMenu === item.id
                       ? 'bg-white/20 text-white'
                       : 'text-white/90 hover:bg-white/20'
-                  }`}
+                  } ${!item.clickable ? 'cursor-default' : 'cursor-pointer'}`}
+                  disabled={!item.clickable}
                 >
                   <span className="relative z-10 flex items-center space-x-2">
                     <item.icon className="w-4 h-4" />
@@ -203,7 +210,6 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
                           </div>
                           <div className="text-left flex-1">
                             <div className="text-white font-medium text-base">{subItem.title}</div>
-                            <div className="text-white text-sm">{subItem.description}</div>
                           </div>
                           <div className="w-2 h-2 bg-white/70 rounded-full group-hover:bg-white transition-colors duration-200"></div>
                         </button>

@@ -8,26 +8,19 @@ import { FileText, TrendingUp, Send, Briefcase, User, Mail, Star, Target, Zap, C
 interface CareerPageProps {
   onNavigate: (page: string) => void
   isLoading: boolean
-  currentSubPage?: string
+  activeSection?: string
 }
 
-export function CareerPage({ onNavigate, isLoading, currentSubPage = 'resume' }: CareerPageProps) {
-  const [activeSection, setActiveSection] = useState<string>(currentSubPage)
+export function CareerPage({ onNavigate, isLoading, activeSection = 'resume' }: CareerPageProps) {
+  const [currentSection, setCurrentSection] = useState<string>(activeSection)
   const [isAutoReplyEnabled, setIsAutoReplyEnabled] = useState(false)
 
-  // Обновляем активную секцию при изменении currentSubPage
+  // Обновляем активную секцию при изменении activeSection
   useEffect(() => {
-    if (currentSubPage && currentSubPage !== activeSection) {
-      setActiveSection(currentSubPage)
+    if (activeSection && activeSection !== currentSection) {
+      setCurrentSection(activeSection)
     }
-  }, [currentSubPage, activeSection])
-
-  const sections = [
-    { id: 'resume', title: 'Резюме', icon: FileText, color: 'from-blue-500 to-cyan-500' },
-    { id: 'prospects', title: 'Перспективы', icon: TrendingUp, color: 'from-green-500 to-emerald-500' }
-  ]
-
-  const currentSection = sections.find(s => s.id === activeSection)
+  }, [activeSection, currentSection])
 
   const resumeData = {
     personalInfo: {
@@ -151,39 +144,82 @@ export function CareerPage({ onNavigate, isLoading, currentSubPage = 'resume' }:
           <p className="text-white/70 text-lg">Постройте успешную карьеру в технологиях!</p>
         </div>
 
-        {/* Переключатель разделов */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-2 border border-white/20">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`px-6 py-3 rounded-xl transition-all duration-300 flex items-center space-x-2 ${
-                  activeSection === section.id
-                    ? 'bg-white/20 text-white shadow-lg'
-                    : 'text-white/60 hover:text-white/80'
-                }`}
-              >
-                <section.icon className="w-5 h-5" />
-                <span>{section.title}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* Контент разделов */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeSection}
+            key={currentSection}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
           >
             {/* Резюме */}
-            {activeSection === 'resume' && (
+            {currentSection === 'resume' && (
               <div className="space-y-8">
-                {/* Автоотклики */}
+                {/* Автогенерация резюме с ИИ */}
+                <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-sm rounded-2xl p-6 border border-blue-500/30">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                        <Brain className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-white">Автогенерация резюме с ИИ</h3>
+                        <p className="text-white/70 text-sm">Создайте идеальное резюме с помощью искусственного интеллекта</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                        Новинка
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div className="bg-white/10 rounded-xl p-4">
+                      <h4 className="text-white font-medium mb-2 flex items-center space-x-2">
+                        <FileText className="w-4 h-4" />
+                        <span>Анализ существующего резюме</span>
+                      </h4>
+                      <p className="text-white/60 text-sm mb-3">ИИ проанализирует ваше текущее резюме и предложит улучшения</p>
+                      <div className="flex items-center space-x-2 text-green-400 text-sm">
+                        <CheckCircle className="w-4 h-4" />
+                        <span>Доступно</span>
+                      </div>
+                    </div>
+                    <div className="bg-white/10 rounded-xl p-4">
+                      <h4 className="text-white font-medium mb-2 flex items-center space-x-2">
+                        <MessageSquare className="w-4 h-4" />
+                        <span>ИИ собеседование</span>
+                      </h4>
+                      <p className="text-white/60 text-sm mb-3">Побеседуйте с ИИ о ваших навыках и опыте</p>
+                      <div className="flex items-center space-x-2 text-blue-400 text-sm">
+                        <Target className="w-4 h-4" />
+                        <span>Рекомендуется</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/10 rounded-xl p-4 mb-6">
+                    <h4 className="text-white font-medium mb-2 flex items-center space-x-2">
+                      <Link className="w-4 h-4" />
+                      <span>Адаптация под вакансию</span>
+                    </h4>
+                    <p className="text-white/60 text-sm mb-3">ИИ создаст резюме, идеально подходящее под конкретную вакансию, исходя из ваших навыков и требований работодателя</p>
+                    <div className="flex items-center space-x-2 text-purple-400 text-sm">
+                      <Zap className="w-4 h-4" />
+                      <span>Умная настройка</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center">
+                    <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                      Начать автогенерацию резюме
+                    </button>
+                  </div>
+                </div>
+
+                {/* Автоотклики на вакансии */}
                 <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
@@ -260,69 +296,6 @@ export function CareerPage({ onNavigate, isLoading, currentSubPage = 'resume' }:
                       </div>
                     </motion.div>
                   )}
-
-                  {/* Автогенерация резюме с ИИ */}
-                  <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-sm rounded-2xl p-6 border border-blue-500/30">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
-                          <Brain className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-semibold text-white">Автогенерация резюме с ИИ</h3>
-                          <p className="text-white/70 text-sm">Создайте идеальное резюме с помощью искусственного интеллекта</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                          Новинка
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      <div className="bg-white/10 rounded-xl p-4">
-                        <h4 className="text-white font-medium mb-2 flex items-center space-x-2">
-                          <FileText className="w-4 h-4" />
-                          <span>Анализ существующего резюме</span>
-                        </h4>
-                        <p className="text-white/60 text-sm mb-3">ИИ проанализирует ваше текущее резюме и предложит улучшения</p>
-                        <div className="flex items-center space-x-2 text-green-400 text-sm">
-                          <CheckCircle className="w-4 h-4" />
-                          <span>Доступно</span>
-                        </div>
-                      </div>
-                      <div className="bg-white/10 rounded-xl p-4">
-                        <h4 className="text-white font-medium mb-2 flex items-center space-x-2">
-                          <MessageSquare className="w-4 h-4" />
-                          <span>ИИ собеседование</span>
-                        </h4>
-                        <p className="text-white/60 text-sm mb-3">Побеседуйте с ИИ о ваших навыках и опыте</p>
-                        <div className="flex items-center space-x-2 text-blue-400 text-sm">
-                          <Target className="w-4 h-4" />
-                          <span>Рекомендуется</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-white/10 rounded-xl p-4 mb-6">
-                      <h4 className="text-white font-medium mb-2 flex items-center space-x-2">
-                        <Link className="w-4 h-4" />
-                        <span>Адаптация под вакансию</span>
-                      </h4>
-                      <p className="text-white/60 text-sm mb-3">ИИ создаст резюме, идеально подходящее под конкретную вакансию, исходя из ваших навыков и требований работодателя</p>
-                      <div className="flex items-center space-x-2 text-purple-400 text-sm">
-                        <Zap className="w-4 h-4" />
-                        <span>Умная настройка</span>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center">
-                      <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
-                        Начать автогенерацию резюме
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Основное резюме */}
@@ -395,7 +368,7 @@ export function CareerPage({ onNavigate, isLoading, currentSubPage = 'resume' }:
             )}
 
             {/* Перспективы */}
-            {activeSection === 'prospects' && (
+            {currentSection === 'prospects' && (
               <div className="space-y-8">
                 {/* Статистика рынка */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
