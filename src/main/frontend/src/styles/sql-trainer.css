@@ -1,0 +1,283 @@
+/* SQL Trainer Styles */
+
+/* Terminal effect */
+.terminal-text {
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+/* Glitch effect for errors */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* Scan line effect */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #00ff00, transparent);
+  animation: scanline 3s linear infinite;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* CRT monitor effect */
+.crt-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 50%,
+    rgba(0, 255, 0, 0.02) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(40, end);
+}
+
+/* Pulse effect for loading */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Success animation */
+@keyframes success-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -30px, 0);
+  }
+  70% {
+    transform: translate3d(0, -15px, 0);
+  }
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.success-bounce {
+  animation: success-bounce 1s ease-in-out;
+}
+
+/* Error shake */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+.shake {
+  animation: shake 0.6s ease-in-out;
+}
+
+/* Progress bar glow */
+.progress-glow {
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Button hover effects */
+.btn-hover {
+  transition: all 0.3s ease;
+}
+
+.btn-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 0, 0.3);
+}
+
+/* Code editor focus effect */
+.code-editor:focus {
+  box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.1);
+  border-color: #00ff00;
+}
+
+/* Task completion indicator */
+.task-complete {
+  background: linear-gradient(45deg, #00ff00, #00cc00);
+  color: white;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+/* Level unlock animation */
+@keyframes unlock {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.unlock-animation {
+  animation: unlock 0.5s ease-out;
+}
+
+/* Hint reveal animation */
+@keyframes hint-reveal {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 200px;
+    opacity: 1;
+  }
+}
+
+.hint-reveal {
+  animation: hint-reveal 0.5s ease-out;
+  overflow: hidden;
+}
+
+/* Result comparison table */
+.result-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #374151;
+  padding: 8px;
+  text-align: left;
+}
+
+.result-table th {
+  background-color: #1f2937;
+  color: #10b981;
+  font-weight: bold;
+}
+
+.result-table tr:nth-child(even) {
+  background-color: #111827;
+}
+
+.result-table tr:hover {
+  background-color: #1f2937;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .terminal-text {
+    font-size: 14px;
+  }
+  
+  .crt-effect::before {
+    background-size: 100% 2px;
+  }
+  
+  .scanline {
+    height: 1px;
+  }
+}
+
+/* Dark theme enhancements */
+.dark-theme {
+  color-scheme: dark;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .scanline,
+  .glitch,
+  .success-bounce,
+  .shake,
+  .unlock-animation,
+  .hint-reveal {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bg-gray-800 {
+    background-color: #000000;
+  }
+  
+  .text-green-400 {
+    color: #ffffff;
+  }
+  
+  .border-gray-600 {
+    border-color: #ffffff;
+  }
+}
