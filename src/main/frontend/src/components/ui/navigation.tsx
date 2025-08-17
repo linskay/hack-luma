@@ -101,20 +101,23 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
   const handleMenuClick = (menuId: string) => {
     if (menuId === 'logout') {
       onNavigate('logout')
-    } else if (menuId === 'courses' || menuId === 'trainers' || menuId === 'library') {
-      onNavigate('learn')
-    } else if (menuId === 'resume' || menuId === 'prospects') {
-      onNavigate('career')
+    } else if (menuId === 'learn' || menuId === 'career') {
+      // Для пунктов с подменю - переходим на основную страницу
+      onNavigate(menuId)
     } else {
+      // Для остальных пунктов - переходим напрямую
       onNavigate(menuId)
     }
   }
 
   const handleSubmenuClick = (subItemId: string) => {
+    // Закрываем подменю после клика
+    setHoveredMenu(null)
+    
     if (subItemId === 'courses' || subItemId === 'trainers' || subItemId === 'library') {
-      onNavigate('learn')
+      onNavigate(subItemId) // Передаем конкретную подстраницу
     } else if (subItemId === 'resume' || subItemId === 'prospects') {
-      onNavigate('career')
+      onNavigate(subItemId) // Передаем конкретную подстраницу
     }
   }
 
