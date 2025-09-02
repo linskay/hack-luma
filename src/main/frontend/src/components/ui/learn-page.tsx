@@ -153,6 +153,8 @@ export function LearnPage({ onNavigate, isLoading, activeSection = 'courses' }: 
       onNavigate('sql')
     } else if (trainerId === 'docker') {
       onNavigate('docker')
+    } else if (trainerId === 'kubernetes') {
+      onNavigate('kube')
     }
     // Для других тренажеров можно добавить обработку
   }
