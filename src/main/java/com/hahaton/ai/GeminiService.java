@@ -22,6 +22,10 @@ public class GeminiService {
     }
     
     public String generateResponse(String question) {
+        return generateText(buildPrompt(question));
+    }
+    
+    public String generateText(String prompt) {
         try {
             // Формируем запрос к Gemini API
             Map<String, Object> requestBody = new HashMap<>();
@@ -29,7 +33,7 @@ public class GeminiService {
             // Содержимое запроса
             Map<String, Object> content = new HashMap<>();
             content.put("parts", new Object[]{
-                Map.of("text", buildPrompt(question))
+                Map.of("text", prompt)
             });
             
             requestBody.put("contents", new Object[]{content});
