@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  User, 
-  BookOpen, 
-  TrendingUp, 
-  DollarSign, 
-  Building2, 
+import {
+  User,
+  BookOpen,
+  TrendingUp,
+  DollarSign,
+  Building2,
   LogOut,
   ChevronDown,
   Dumbbell,
@@ -14,6 +14,7 @@ import {
   Briefcase,
   MessageSquare
 } from 'lucide-react'
+import { BooLogo } from './BooLogo';
 
 interface NavigationProps {
   onNavigate: (page: string) => void
@@ -131,9 +132,7 @@ export function Navigation({ onNavigate, currentPage }: NavigationProps) {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-xl border-b border-white/20 shadow-2xl">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-white text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            &lt;BOO!/&gt;
-          </div>
+          <BooLogo />
           
           <div className="flex items-center space-x-3">
             {menuItems.map((item) => (
