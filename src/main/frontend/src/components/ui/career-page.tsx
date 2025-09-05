@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { GradientButton } from './gradient-button'
 import { AIHelper } from './ai-helper'
-import { MorphingSquare } from './morphing-square'
+import GlitchLoader from './GlitchLoader'
 import { ResumeBuilder } from './resume-builder'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, TrendingUp, Send, Briefcase, User, Mail, Star, Target, Zap, CheckCircle, Clock, DollarSign, Brain, MessageSquare, Link } from 'lucide-react'
@@ -522,7 +522,7 @@ export function CareerPage({ onNavigate, isLoading, activeSection = 'resume' }: 
       {/* Спиннер загрузки */}
       {isLoading && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <MorphingSquare message="Загрузка карьеры..." />
+          <GlitchLoader message="Загрузка карьеры..." />
         </div>
       )}
       

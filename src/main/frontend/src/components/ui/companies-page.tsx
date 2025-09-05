@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { GradientButton } from './gradient-button'
 import { AIHelper } from './ai-helper'
-import { MorphingSquare } from './morphing-square'
+import GlitchLoader from './GlitchLoader'
 
 interface CompaniesPageProps {
   onNavigate: (page: string) => void
@@ -218,7 +218,7 @@ export function CompaniesPage({ onNavigate, isLoading }: CompaniesPageProps) {
       {/* Спиннер загрузки */}
       {isLoading && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <MorphingSquare message="Загрузка системы..." />
+          <GlitchLoader message="Загрузка системы..." />
         </div>
       )}
 

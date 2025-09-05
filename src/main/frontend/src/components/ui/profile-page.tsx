@@ -1,7 +1,7 @@
 import React from 'react'
 import { GradientButton } from './gradient-button'
 import { AIHelper } from './ai-helper'
-import { MorphingSquare } from './morphing-square'
+import GlitchLoader from './GlitchLoader'
 
 interface ProfilePageProps {
   onNavigate: (page: string) => void
