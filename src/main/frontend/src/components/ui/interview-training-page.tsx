@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AIHelper } from './ai-helper'
-import { MorphingSquare } from './morphing-square'
+import GlitchLoader from './GlitchLoader'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   User, 
@@ -202,7 +202,7 @@ export function InterviewTrainingPage({ onNavigate, isLoading }: InterviewTraini
   if (isLoading) {
     return (
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-        <MorphingSquare message="Загрузка..." />
+        <GlitchLoader message="Загрузка..." />
       </div>
     )
   }

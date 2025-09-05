@@ -7,14 +7,15 @@ import { CareerPage } from '@/components/ui/career-page'
 import { PricesPage } from '@/components/ui/prices-page'
 import { CompaniesPage } from '@/components/ui/companies-page'
 import { AIHelper } from '@/components/ui/ai-helper'
-import { MorphingSquare } from '@/components/ui/morphing-square'
+import GlitchLoader from '@/components/ui/GlitchLoader'
 import { Navigation } from '@/components/ui/navigation'
 import SQLTrainerPage from '@/components/ui/sql-trainer-page'
 import { InterviewTrainingPage } from '@/components/ui/interview-training-page'
 import { DockerTrainerPage } from '@/components/ui/docker-trainer-page'
+import { KubeTrainerPage } from '@/components/ui/kube-trainer-page'
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'profile' | 'learn' | 'career' | 'prices' | 'companies' | 'sql' | 'courses' | 'trainers' | 'library' | 'resume' | 'prospects' | 'interview' | 'docker'>('home')
+  const [currentPage, setCurrentPage] = useState<'home' | 'profile' | 'learn' | 'career' | 'prices' | 'companies' | 'sql' | 'courses' | 'trainers' | 'library' | 'resume' | 'prospects' | 'interview' | 'docker' | 'kube'>('home')
   const [isLoading, setIsLoading] = useState(false)
 
   // Сбрасываем состояние загрузки при изменении страницы
@@ -46,6 +47,8 @@ export default function App() {
       setCurrentPage('sql')
     } else if (page === 'docker') {
       setCurrentPage('docker')
+    } else if (page === 'kube') {
+      setCurrentPage('kube')
     } else if (page === 'courses') {
       setCurrentPage('courses')
     } else if (page === 'trainers') {
@@ -126,6 +129,15 @@ export default function App() {
       <>
         <Navigation key="docker" onNavigate={handleNavigate} currentPage="docker" />
         <DockerTrainerPage onNavigate={handleNavigate} isLoading={isLoading} />
+      </>
+    )
+  }
+
+  if (currentPage === 'kube') {
+    return (
+      <>
+        <Navigation key="kube" onNavigate={handleNavigate} currentPage="kube" />
+        <KubeTrainerPage onNavigate={handleNavigate} isLoading={isLoading} />
       </>
     )
   }

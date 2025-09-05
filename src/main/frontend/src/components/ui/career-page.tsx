@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { GradientButton } from './gradient-button'
 import { AIHelper } from './ai-helper'
-import { MorphingSquare } from './morphing-square'
+import GlitchLoader from './GlitchLoader'
+import { ResumeBuilder } from './resume-builder'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, TrendingUp, Send, Briefcase, User, Mail, Star, Target, Zap, CheckCircle, Clock, DollarSign, Brain, MessageSquare, Link } from 'lucide-react'
 
@@ -14,6 +15,7 @@ interface CareerPageProps {
 export function CareerPage({ onNavigate, isLoading, activeSection = 'resume' }: CareerPageProps) {
   const [currentSection, setCurrentSection] = useState<string>(activeSection)
   const [isAutoReplyEnabled, setIsAutoReplyEnabled] = useState(false)
+  const [showResumeBuilder, setShowResumeBuilder] = useState(false)
 
   // Обновляем активную секцию при изменении activeSection
   useEffect(() => {
@@ -213,7 +215,10 @@ export function CareerPage({ onNavigate, isLoading, activeSection = 'resume' }: 
                   </div>
 
                   <div className="flex justify-center">
-                    <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                    <button 
+                      onClick={() => setShowResumeBuilder(true)}
+                      className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+                    >
                       Начать автогенерацию резюме
                     </button>
                   </div>
@@ -517,12 +522,19 @@ export function CareerPage({ onNavigate, isLoading, activeSection = 'resume' }: 
       {/* Спиннер загрузки */}
       {isLoading && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <MorphingSquare message="Загрузка карьеры..." />
+          <GlitchLoader message="Загрузка карьеры..." />
         </div>
       )}
       
       {/* AI Помощник */}
       <AIHelper />
+      
+      {/* Resume Builder Modal */}
+      <AnimatePresence>
+        {showResumeBuilder && (
+          <ResumeBuilder onClose={() => setShowResumeBuilder(false)} />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

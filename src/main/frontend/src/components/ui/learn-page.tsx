@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { GradientButton } from './gradient-button'
 import { AIHelper } from './ai-helper'
-import { MorphingSquare } from './morphing-square'
+import GlitchLoader from './GlitchLoader'
 import { motion, AnimatePresence } from 'framer-motion'
 import { GitBranch, Database, Terminal, Ship, Server, Code, Globe, Shield } from 'lucide-react'
 
@@ -153,6 +153,8 @@ export function LearnPage({ onNavigate, isLoading, activeSection = 'courses' }: 
       onNavigate('sql')
     } else if (trainerId === 'docker') {
       onNavigate('docker')
+    } else if (trainerId === 'kubernetes') {
+      onNavigate('kube')
     }
     // Для других тренажеров можно добавить обработку
   }
@@ -287,7 +289,7 @@ export function LearnPage({ onNavigate, isLoading, activeSection = 'courses' }: 
       {/* Спиннер загрузки */}
       {isLoading && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <MorphingSquare message="Загрузка..." />
+          <GlitchLoader message="Загрузка..." />
         </div>
       )}
       
